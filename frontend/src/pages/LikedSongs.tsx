@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { api } from '../services/api';
 import { Song } from '../types';
 import { FaHeart, FaPlay, FaPlus, FaHeartBroken } from 'react-icons/fa';
+import { usePlayerStore } from '../store/playerStore';
 
 const Container = styled.div`
   padding: 2rem;
@@ -221,13 +222,16 @@ export const LikedSongs: React.FC = () => {
   };
 
   const handlePlay = (song: Song) => {
-    console.log('Playing song:', song.title);
-    // TODO: Integrate with music player
+    const { playSong, setQueue } = usePlayerStore.getState();
+    playSong(song);
+    setQueue(likedSongs);
   };
 
   const handlePlayAll = () => {
-    console.log('Playing all liked songs');
-    // TODO: Integrate with music player
+    if (likedSongs.length === 0) return;
+    const { playSong, setQueue } = usePlayerStore.getState();
+    playSong(likedSongs[0]);
+    setQueue(likedSongs);
   };
 
   const handleUnlike = async (song: Song) => {

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { api } from '../../services/api';
 import { Song } from '../../types';
 import { useAuthStore } from '../../store/authStore';
+import { usePlayerStore } from '../../store/playerStore';
 import { FaMusic, FaUpload, FaEye, FaPlay, FaEdit, FaTrash, FaClock, FaCheck, FaTimes } from 'react-icons/fa';
 
 const Container = styled.div`
@@ -300,8 +301,10 @@ export const ArtistDashboard: React.FC = () => {
   };
 
   const handlePlay = (song: Song) => {
-    console.log('Playing song:', song.title);
-    // TODO: Integrate with music player
+    const { playSong, setQueue } = usePlayerStore.getState();
+    const approvedSongs = songs.filter(s => s.status === 'APPROVED');
+    playSong(song);
+    setQueue(approvedSongs);
   };
 
   const handleEdit = (song: Song) => {

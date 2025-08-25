@@ -424,8 +424,7 @@ export const PlaylistDetail: React.FC = () => {
 
   const handlePlaySong = (song: Song, index: number) => {
     playSong(song);
-    // Set queue starting from the clicked song
-    setQueue(songs.slice(index));
+    setQueue(songs, index);
   };
 
   const handleRemoveSong = async (songId: number) => {

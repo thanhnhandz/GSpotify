@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { api } from '../services/api';
 import { Song, Genre } from '../types';
 import { TrackCard } from '../components/TrackCard';
+import { usePlayerStore } from '../store/playerStore';
 
 const Container = styled.div`
   padding: var(--space-xl);
@@ -285,9 +286,10 @@ export const Browse: React.FC = () => {
 
   // Memoized play handler for performance
   const handlePlay = useCallback((song: Song) => {
-    console.log('Playing song:', song.title);
-    // TODO: Integrate with music player
-  }, []);
+    const { playSong, setQueue } = usePlayerStore.getState();
+    playSong(song);
+    setQueue(filteredSongs);
+  }, [filteredSongs]);
 
   const handlePageChange = useCallback((page: number) => {
     setCurrentPage(page);

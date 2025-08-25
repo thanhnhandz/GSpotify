@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { api } from '../services/api';
 import { Song, User } from '../types';
 import { FaSearch, FaPlay, FaUser, FaMusic } from 'react-icons/fa';
+import { usePlayerStore } from '../store/playerStore';
 
 const Container = styled.div`
   padding: var(--space-xl);
@@ -531,8 +532,9 @@ export const Search: React.FC = () => {
 
 
   const handlePlay = (song: Song) => {
-    console.log('Playing song:', song.title);
-    // TODO: Integrate with music player
+    const { playSong, setQueue } = usePlayerStore.getState();
+    playSong(song);
+    setQueue(songs);
   };
 
   const handleArtistClick = (artist: User) => {
